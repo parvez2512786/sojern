@@ -1,3 +1,4 @@
+# Question 2 - Util - 'compare versions'
 def compare_versions(version1,version2):
   ver1=[int(i) for i in version1.split(".")]
   ver2=[int(i) for i in version2.split(".")]
