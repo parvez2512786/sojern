@@ -33,6 +33,10 @@ spec:
             - 
               containerPort: 80
           resources: {}
+          envFrom:
+        # The ConfigMap we want to use
+          - configMapRef:
+              name: sojern-config
 status: {}
 ---
 apiVersion: v1
