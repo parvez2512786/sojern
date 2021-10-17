@@ -17,4 +17,4 @@ def compare_versions(version1,version2):
   else:
     return 0
 
-print(compare_versions("1.2.9.9.9","1.3"))
+compare_versions("1.2.9.9.9","1.3")
