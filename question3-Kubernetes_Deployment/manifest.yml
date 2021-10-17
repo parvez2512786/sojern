@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+data:
+  ENV: PROD
+kind: ConfigMap
+metadata:
+  name: sojern-config
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: sojern-deploy
+  name: sojern-deploy
+spec: 
+  replicas: 3
+  selector: 
+    matchLabels: 
+      app: sojern-deploy
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: sojern-deploy
+    spec: 
+      containers: 
+        - 
+          image: nginx
+          name: nginx
+          ports: 
+            - 
+              containerPort: 80
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sojern-deploy
+  name: sojern-deploy
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: sojern-deploy
+status:
+  loadBalancer: {}
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: sojern-deploy
+spec:
+  maxReplicas: 10
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sojern-deploy
+  targetCPUUtilizationPercentage: 50
+status:
+  currentReplicas: 3
+  desiredReplicas: 3
